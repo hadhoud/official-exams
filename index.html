@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Official Exams Library</title>
+<meta name="description" content="Lebanese Technical Diploma (TS) official exams by major, course and year – Electronics, Management Informatics, Systems & Networks. Preview, download and track your revision.">
+<meta name="theme-color" content="#12355b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2312355b'/%3E%3Cpath d='M18 14h20l10 10v26H18z' fill='%23fff'/%3E%3Cpath d='M38 14v10h10' fill='%23c9d6e6'/%3E%3Cpath d='M24 34h16M24 40h16M24 28h10' stroke='%2312355b' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the exams</a>
+
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="#" id="homeLink" aria-label="Official Exams Library – home">
+      <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 12h7M9 15h7M9 18h4"/></svg></span>
+      <span>
+        <span class="title">Official Exams Library</span>
+        <span class="sub">Lebanese Technical Diploma (TS) &middot; <span lang="ar" dir="rtl">الامتحانات الرسمية – الامتياز الفني</span></span>
+      </span>
+    </a>
+    <div class="stats" id="stats" aria-label="Library statistics"></div>
+    <button class="icon-btn on-dark" id="themeBtn" title="Light / dark theme" aria-label="Toggle light or dark theme">
+      <svg viewBox="0 0 24 24"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="toolbar" role="search">
+  <div class="wrap toolbar-inner">
+    <button class="btn ghost filters-btn" id="filtersBtn" aria-controls="sidebar" aria-expanded="false">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg> Filters <span class="count" id="filterCount" hidden></span>
+    </button>
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Search a course, year, code or topic – e.g. “triac 2024”, “PIA”, “umask”" autocomplete="off" aria-label="Search exams">
+      <kbd class="hide-sm" title="Press / to search">/</kbd>
+    </div>
+    <button class="btn ghost hide-sm" id="randomBtn" title="Open a random exam from the current selection">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.3"/><circle cx="15.5" cy="15.5" r="1.3"/><circle cx="12" cy="12" r="1.3"/></svg> Random exam
+    </button>
+  </div>
+</div>
+
+<div class="wrap layout">
+  <aside class="side" id="sidebar" aria-label="Filters">
+    <div class="side-head">
+      <strong>Filters</strong>
+      <button class="icon-btn" id="sideClose" aria-label="Close filters"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+
+    <section class="fgroup">
+      <h2>Major</h2>
+      <div id="majorList" class="opt-list"></div>
+    </section>
+    <section class="fgroup">
+      <h2>Course</h2>
+      <div id="courseList" class="opt-list"></div>
+    </section>
+    <section class="fgroup">
+      <h2>Year</h2>
+      <select id="yearSel" aria-label="Year"></select>
+      <div class="timeline" id="timeline" aria-label="Documents per year"></div>
+    </section>
+    <section class="fgroup">
+      <h2>Session</h2>
+      <div class="seg" id="sessSeg" role="radiogroup" aria-label="Session">
+        <button data-sess="" role="radio">All</button><button data-sess="1" role="radio">1st</button><button data-sess="2" role="radio">2nd</button>
+      </div>
+    </section>
+    <section class="fgroup">
+      <h2>Type</h2>
+      <div id="typeList" class="type-list"></div>
+    </section>
+    <section class="fgroup">
+      <h2>My revision</h2>
+      <label class="switch"><input type="checkbox" id="favOnly"><span></span> Favourites only</label>
+      <label class="switch"><input type="checkbox" id="hideDone"><span></span> Hide exams I revised</label>
+      <p class="hint">Your favourites and revised exams are saved in this browser only.</p>
+    </section>
+    <button class="btn wide" id="resetBtn">Reset all filters</button>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <main id="main" tabindex="-1">
+    <nav class="crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
+    <div class="headline">
+      <div>
+        <h1 id="pageTitle">Choose your course</h1>
+        <p class="lead" id="pageLead"></p>
+      </div>
+      <div class="head-tools" id="headTools">
+        <label class="sort">Sort
+          <select id="sortSel"><option value="new">Newest first</option><option value="old">Oldest first</option></select>
+        </label>
+        <div class="seg small" id="viewSeg" role="radiogroup" aria-label="View">
+          <button data-view="table" role="radio" title="Years in rows, sessions in columns">Table</button>
+          <button data-view="grid" role="radio" title="One card per document">Cards</button>
+        </div>
+      </div>
+    </div>
+    <section id="continue" class="continue" hidden aria-label="Continue where you left off"></section>
+    <div id="results" aria-live="polite"></div>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Official papers of the Lebanese Ministry of Education &ndash; Directorate General of Vocational and Technical Education, collected for revision.
+      <b>Solved</b> versions, <b>practice</b> banks and student <b>notes</b> are not official answer keys unless marked <b>Exam + key</b>.</p>
+    <p class="small">Shortcuts: <kbd>/</kbd> search &middot; in the viewer <kbd>&larr;</kbd> <kbd>&rarr;</kbd> previous / next, <kbd>D</kbd> mark as revised, <kbd>F</kbd> favourite, <kbd>Esc</kbd> close. The address bar keeps your selection, so you can share the link.</p>
+  </div>
+</footer>
+
+<dialog id="viewer" aria-labelledby="viewerTitle">
+  <div class="viewer-head">
+    <button class="icon-btn" id="vPrev" title="Previous exam (←)" aria-label="Previous exam"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="viewer-titles">
+      <div id="viewerTitle" class="viewer-title"></div>
+      <div id="viewerMeta" class="viewer-meta"></div>
+    </div>
+    <button class="icon-btn" id="vNext" title="Next exam (→)" aria-label="Next exam"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    <div class="viewer-actions">
+      <button class="btn ghost" id="vDone" title="Mark as revised (D)"></button>
+      <button class="icon-btn" id="vFav" title="Favourite (F)" aria-label="Favourite"></button>
+      <a class="btn ghost hide-sm" id="vOpen" target="_blank" rel="noopener">New tab</a>
+      <a class="icon-btn" id="vDl" download title="Download" aria-label="Download"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a>
+      <button class="icon-btn" id="vClose" title="Close (Esc)" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+  </div>
+  <iframe id="viewerFrame" title="Exam document"></iframe>
+</dialog>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="data/exams.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
