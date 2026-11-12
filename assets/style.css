@@ -33,8 +33,9 @@ kbd { font:12px Consolas, monospace; border:1px solid var(--line); border-bottom
 .top { background:linear-gradient(115deg, #0f2e50 0%, #1f5d99 100%); color:#fff; }
 .top-inner { display:flex; align-items:center; gap:16px; padding:16px; }
 .brand { display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none; min-width:0; margin-right:auto; }
-.logo { width:44px; height:44px; border-radius:12px; background:#fff; color:#12355b; display:grid; place-items:center; flex:none; }
+.logo { width:44px; height:44px; border-radius:50%; background:#fff; color:#12355b; display:grid; place-items:center; flex:none; }
 .logo svg { width:26px; height:26px; }
+.logo img { width:100%; height:100%; border-radius:50%; display:block; }
 .title { display:block; font-size:21px; font-weight:750; line-height:1.15; }
 .sub { display:block; font-size:13.5px; opacity:.85; }
 .stats { display:flex; gap:18px; }
